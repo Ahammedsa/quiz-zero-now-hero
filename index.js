@@ -9,7 +9,7 @@ let startQuiz = document.querySelector("#startQuiz");
 let rulesContainer = document.querySelector("#rulesContainer");
 let alertContainer = document.querySelector("#alertContainer");
 let submitContainer = document.querySelector("#submitContainer");
-let quizContainer = document.querySelector("#quizContainer");
+// let quizContainer = document.querySelector("#quizContainer");
 let answersContainer = document.querySelector("#answersContainer");
 let displayResult = document.querySelector("#displayResult");
 
@@ -59,7 +59,9 @@ const displayQuiz = (data) => {
   }
 
   data.forEach((quiz, i) => {
-    quizContainer.innerHTML += `<div class="m-3 py-3 px-4 shadow-sm rounded">
+    const quizContainer = document.getElementById("quizContainer");
+    const div = document.createElement("div");
+    div.innerHTML = `<div class="m-3 py-3 px-4 shadow-sm rounded">
   <div class="flex items-center">
     <div class="h-8 w-8 bg-green-300 rounded-full flex justify-center items-center text-green-800 mr-3">
       ${i + 1}
@@ -70,19 +72,25 @@ const displayQuiz = (data) => {
     ${displayQuizOptions(quiz.options, i)}
   </div>
 </div>`;
+quizContainer.appendChild(div);
   });
 };
 
 // EventListener for quiz submit button
-document.querySelector("#submit").addEventlistener("click", () => {
+const submit = document.getElementById("submit") ;
+
+submit.addEventlistener("click", () => {
+  console.log(41 , "button clicked");
   if (answers.length < 6) {
     return;
   }
   quizTimer(true);
-  answersContainer.innerHTML = `<div class="my-4">
+  
+  answersContainer.innerHTML += `<div class="my-4">
   <i class="fa-solid fa-fan animate-spin text-2xl text-green-600"></i>
   <p class="text-xs animate-pulse">Please Wait, We are checking...</p>
 </div>`;
+
   let timeTaken = document.querySelector("#count");
   let totalMark = 0;
   let grade = {
